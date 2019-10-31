@@ -1,10 +1,6 @@
-import Agent from './Agent'
+import StateBasedAgent from './base/StateBasedAgent'
 
-// on-policy model-free TD learning for state value function
-export default class TdAgent extends Agent {
-  performBackup() {
-  }
-
+export default class TdAgent extends StateBasedAgent {
   goNextStep(onStepComplete, onTrajectoryComplete, options = {}) {
     const { alwaysGreedy = false, shouldUpdate = true } = options
     if (!this.runningTrajectory) {

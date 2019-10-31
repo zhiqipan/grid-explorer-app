@@ -1,4 +1,4 @@
-import Agent from './Agent'
+import Agent from './agents/base/Agent'
 
 export default class AgentTrainer {
   constructor() {

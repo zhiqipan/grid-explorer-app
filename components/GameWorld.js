@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import '../styles/game-grid.scss'
 import GridWorld from '../rl/GridWorld'
-import Agent from '../rl/Agent'
-import TdAgent from '../rl/TdAgent'
-import SarsaAgent from '../rl/SarsaAgent'
-import QLearningAgent from '../rl/QLearningAgent'
+import McAgent from '../rl/agents/McAgent'
+import TdAgent from '../rl/agents/TdAgent'
+import SarsaMcAgent from '../rl/agents/SarsaMcAgent'
+import QLearningMcAgent from '../rl/agents/QLearningMcAgent'
 import AgentTrainer from '../rl/AgentTrainer'
 import StateValueGrid from '../components/StateValueGrid'
 import ActionValueGrid from '../components/ActionValueGrid'
@@ -30,6 +30,7 @@ export default class GameWorld extends Component {
     //
     trajectoryRunning: false,
     stepInterval: 10,
+    agentType: null,
   }
 
   componentDidMount() {
@@ -43,7 +44,6 @@ export default class GameWorld extends Component {
     ]
 
     this.grid = new GridWorld(5, 6)
-    this.agent = new QLearningAgent(this.grid, { epsilon: 0.6, discount: 0.9 })
     this.gridWorldObserver = {
       notifyGameInit: (x, y) => {
         this.setState({ startX: x, startY: y, agentX: x, agentY: y })
@@ -62,18 +62,52 @@ export default class GameWorld extends Component {
         })
       },
     }
-    this.grid.addObserver(this.gridWorldObserver)
     this.agentObserver = {
       notifyValuesUpdate: (learntValues) => {
         this.setState({ learntValues })
       },
     }
-    this.agent.addObserver(this.agentObserver)
-
+    this.grid.addObserver(this.gridWorldObserver)
     this.grid.setRewards(gridRewards)
     this.grid.setTerminal(2, 4)
     this.grid.addBlock(0, 1)
     this.grid.addWind(1, 1, { strength: 2, direction: 'right', chance: .3 })
+
+    this.switchAgent('mc')
+  }
+
+  switchAgent(name) {
+    const agents = {
+      'mc': McAgent,
+      'td': TdAgent,
+      'q-learning-mc': QLearningMcAgent,
+      'sarsa-mc': SarsaMcAgent,
+    }
+    if (agents[name]) {
+      if (this.agent) this.agent.removeAllObservers()
+      this.agent = new agents[name](this.grid, { epsilon: 0.6, discount: 0.9 })
+      this.agent.addObserver(this.agentObserver)
+      this.setState({ agentType: this.agent.agentType })
+    }
+  }
+
+  startTraining(times = 1) {
+    this.grid.removeObserver(this.gridWorldObserver)
+    this.agent.removeObserver(this.agentObserver)
+    AgentTrainer.train(this.agent, times)
+    this.grid.addObserver(this.gridWorldObserver)
+    this.agent.addObserver(this.agentObserver)
+  }
+
+  renderValueGrid() {
+    if (!this.agent) return null
+
+    const { gridWidth, gridHeight, learntValues, agentType } = this.state
+
+    return agentType === 'state-based' ?
+      <StateValueGrid width={gridWidth} height={gridHeight} values={learntValues} />
+      : <ActionValueGrid width={gridWidth} height={gridHeight} values={learntValues} />
+
   }
 
   render() {
@@ -100,30 +134,9 @@ export default class GameWorld extends Component {
           {gameGrid}
         </div>
         <hr />
-        <button onClick={() => {
-          this.grid.removeObserver(this.gridWorldObserver)
-          this.agent.removeObserver(this.agentObserver)
-          AgentTrainer.train(this.agent, 10)
-          this.grid.addObserver(this.gridWorldObserver)
-          this.agent.addObserver(this.agentObserver)
-        }}>Train 10 times
-        </button>
-        <button onClick={() => {
-          this.grid.removeObserver(this.gridWorldObserver)
-          this.agent.removeObserver(this.agentObserver)
-          AgentTrainer.train(this.agent, 100)
-          this.grid.addObserver(this.gridWorldObserver)
-          this.agent.addObserver(this.agentObserver)
-        }}>Train 100 times
-        </button>
-        <button onClick={() => {
-          this.grid.removeObserver(this.gridWorldObserver)
-          this.agent.removeObserver(this.agentObserver)
-          AgentTrainer.train(this.agent, 1000)
-          this.grid.addObserver(this.gridWorldObserver)
-          this.agent.addObserver(this.agentObserver)
-        }}>Train 1000 times
-        </button>
+        <button onClick={() => this.startTraining(10)}>Train 10 times</button>
+        <button onClick={() => this.startTraining(100)}>Train 100 times</button>
+        <button onClick={() => this.startTraining(1000)}>Train 1000 times</button>
         <hr />
         <input placeholder='speed' type='number' disabled={this.state.trajectoryRunning} value={this.state.stepInterval}
                onChange={e => this.setState({ stepInterval: e.target.value })} />
@@ -164,8 +177,12 @@ export default class GameWorld extends Component {
         }}>Reset learning progress
         </button>
         <hr />
-        <ActionValueGrid width={gridWidth} height={gridHeight} values={learntValues} />
-        {/*<StateValueGrid width={gridWidth} height={gridHeight} values={learntValues} />*/}
+        <button onClick={() => this.switchAgent('mc')}>State-based MC</button>
+        <button onClick={() => this.switchAgent('td')}>State-based TD</button>
+        <button onClick={() => this.switchAgent('q-learning-mc')}>Q-learning MC</button>
+        <button onClick={() => this.switchAgent('sarsa-mc')}>Sarsa MC</button>
+        <hr />
+        {this.renderValueGrid()}
       </div>
     )
   }

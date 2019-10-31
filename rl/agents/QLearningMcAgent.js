@@ -1,7 +1,6 @@
-import SarsaAgent from './SarsaAgent'
+import SarsaMcAgent from './SarsaMcAgent'
 
-export default class QLearningAgent extends SarsaAgent {
-
+export default class QLearningMcAgent extends SarsaMcAgent {
   pickGreedyActionAtPos(x, y) {
     const actions = this.values[x] && this.values[x][y] || {}
     const values = Object.values(actions)
