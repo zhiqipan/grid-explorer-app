@@ -14,6 +14,7 @@ export default class Agent {
     this.epsilon = epsilon
     this.discount = discount
     this.observers = []
+    this.observersPaused = false
     this.runningTrajectory = null
   }
 
@@ -32,7 +33,17 @@ export default class Agent {
     this.observers.length = 0
   }
 
+  pauseObservers() {
+    this.observersPaused = true
+  }
+
+  resumeObservers() {
+    this.observersPaused = false
+    this.notifyValuesUpdate()
+  }
+
   notifyValuesUpdate() {
+    if (this.observersPaused) return
     this.observers.forEach(ob => {
       if (typeof ob.notifyValuesUpdate === 'function') {
         ob.notifyValuesUpdate(this.values)

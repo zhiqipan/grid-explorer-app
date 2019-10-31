@@ -13,6 +13,7 @@ export default class GridWorld {
     this.blocks = {}
     this.winds = {}
     this.observers = []
+    this.observersPaused = false
   }
 
   addObserver(ob) {
@@ -30,7 +31,18 @@ export default class GridWorld {
     this.observers.length = 0
   }
 
+  pauseObservers() {
+    this.observersPaused = true
+  }
+
+  resumeObservers() {
+    this.observersPaused = false
+    this.notifyGridConfigChange()
+    this.notifyAgentMove()
+  }
+
   notifyGameInit(x, y) {
+    if (this.observersPaused) return
     this.observers.forEach(ob => {
       if (typeof ob.notifyGameInit === 'function') {
         ob.notifyGameInit(x, y)
@@ -39,6 +51,7 @@ export default class GridWorld {
   }
 
   notifyGridConfigChange() {
+    if (this.observersPaused) return
     const { rewards, blocks, winds } = this
     this.observers.forEach(ob => {
       if (typeof ob.notifyGridConfigChange === 'function') {
@@ -48,6 +61,7 @@ export default class GridWorld {
   }
 
   notifyAgentMove() {
+    if (this.observersPaused) return
     const { x, y } = this.getCurrPos()
     const reward = this.getCurrReward()
     this.observers.forEach(ob => {
@@ -58,11 +72,16 @@ export default class GridWorld {
   }
 
   notifyWindTriggered(windX, windY, wind) {
+    if (this.observersPaused) return
     this.observers.forEach(ob => {
       if (typeof ob.notifyWindTriggered === 'function') {
         ob.notifyWindTriggered(windX, windY, wind)
       }
     })
+  }
+
+  getSize() {
+    return { width: this.MAX_X + 1, height: this.MAX_Y + 1 }
   }
 
   init(x, y) {

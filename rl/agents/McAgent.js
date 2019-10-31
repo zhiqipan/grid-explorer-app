@@ -2,6 +2,8 @@ import StateBasedAgent from './base/StateBasedAgent'
 
 // on-policy model-free Monte-Carlo learning for state value function
 export default class McAgent extends StateBasedAgent {
+  agentName = 'mc'
+
   goNextStep(onStepComplete, onTrajectoryComplete, options = {}) {
     const { alwaysGreedy = false, shouldUpdate = true } = options
     if (!this.runningTrajectory) {

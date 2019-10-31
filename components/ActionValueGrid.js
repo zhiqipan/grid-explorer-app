@@ -18,7 +18,7 @@ export default class ActionValueGrid extends Component {
       const cells = []
       for (let x = 0; x < width; x++) {
         cells.push(
-          <div key={`${x}-${y}`} className={`cell cell--larger`} style={{ margin: 5 }}>
+          <div key={`${x}-${y}`} className={`cell cell--larger`}>
             <ActionValue values={values[x] && values[x][y]} />
           </div>,
         )

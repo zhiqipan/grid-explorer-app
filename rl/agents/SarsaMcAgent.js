@@ -1,6 +1,8 @@
 import ActionBasedAgent from './base/ActionBasedAgent'
 
 export default class SarsaMcAgent extends ActionBasedAgent {
+  agentName = 'sarsa-mc'
+
   performBackup(trajectory) {
     for (let i = trajectory.length - 1; i >= 0; i--) {
       const currStep = trajectory[i]

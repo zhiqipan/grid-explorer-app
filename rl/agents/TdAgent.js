@@ -1,6 +1,8 @@
 import StateBasedAgent from './base/StateBasedAgent'
 
 export default class TdAgent extends StateBasedAgent {
+  agentName = 'td'
+
   goNextStep(onStepComplete, onTrajectoryComplete, options = {}) {
     const { alwaysGreedy = false, shouldUpdate = true } = options
     if (!this.runningTrajectory) {

@@ -1,6 +1,8 @@
 import SarsaMcAgent from './SarsaMcAgent'
 
 export default class QLearningMcAgent extends SarsaMcAgent {
+  agentName = 'q-learning-mc'
+
   pickGreedyActionAtPos(x, y) {
     const actions = this.values[x] && this.values[x][y] || {}
     const values = Object.values(actions)

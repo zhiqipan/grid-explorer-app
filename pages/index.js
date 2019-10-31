@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import GameWorld from '../components/GameWorld'
+import GameApp from '../components/GameApp'
+import Layout from '../components/common/Layout'
 
 export default class Home extends Component {
   render() {
-    return <GameWorld />
+    return <Layout><GameApp /></Layout>
   }
 }
