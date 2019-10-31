@@ -49,10 +49,10 @@ class ActionValue extends Component {
     const { values } = this.props
     if (!values) return null
 
-    const left = typeof values.left === 'number' ? Math.round(values.left * 10) / 10 : '?'
-    const right = typeof values.right === 'number' ? Math.round(values.right * 10) / 10 : '?'
-    const up = typeof values.up === 'number' ? Math.round(values.up * 10) / 10 : '?'
-    const down = typeof values.down === 'number' ? Math.round(values.down * 10) / 10 : '?'
+    const left = typeof values.left === 'number' ? Math.round(values.left * 10) / 10 : ''
+    const right = typeof values.right === 'number' ? Math.round(values.right * 10) / 10 : ''
+    const up = typeof values.up === 'number' ? Math.round(values.up * 10) / 10 : ''
+    const down = typeof values.down === 'number' ? Math.round(values.down * 10) / 10 : ''
     const any = typeof values.any === 'number' && Math.round(values.any * 10) / 10
 
     const idx = Object.values(values).indexOf(Math.max(...Object.values(values)))
@@ -60,8 +60,9 @@ class ActionValue extends Component {
     const dirValueMap = { left, right, up, down }
 
     const arrow = dir => (
-      <div className={`triangle ${bestAction === dir ? 'triangle--highlight' : ''} triangle--${dir}`}
-           style={{ color: (any || dirValueMap[dir]) >= 0 ? 'green' : 'red' }}>{any || dirValueMap[dir]}</div>
+      <div
+        className={`triangle ${bestAction === dir ? 'triangle--highlight' : ''} ${(any || dirValueMap[dir]) === '' ? 'triangle--grey' : ''} triangle--${dir}`}
+        style={{ color: (any || dirValueMap[dir]) >= 0 ? 'green' : 'red' }}>{any || dirValueMap[dir]}</div>
     )
 
     return (

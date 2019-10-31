@@ -64,6 +64,10 @@
       border: $triangle-size solid #81e28e;
     }
 
+    &--grey {
+      border: $triangle-size solid white;
+    }
+
     &--up {
       border-left-color: transparent;
       border-right-color: transparent;
