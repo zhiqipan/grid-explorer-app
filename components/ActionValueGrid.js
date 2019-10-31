@@ -55,12 +55,21 @@ class ActionValue extends Component {
     const down = typeof values.down === 'number' ? Math.round(values.down * 10) / 10 : '?'
     const any = typeof values.any === 'number' && Math.round(values.any * 10) / 10
 
+    const idx = Object.values(values).indexOf(Math.max(...Object.values(values)))
+    const bestAction = Object.keys(values)[idx]
+    const dirValueMap = { left, right, up, down }
+
+    const arrow = dir => (
+      <div className={`triangle ${bestAction === dir ? 'triangle--highlight' : ''} triangle--${dir}`}
+           style={{ color: (any || dirValueMap[dir]) >= 0 ? 'green' : 'red' }}>{any || dirValueMap[dir]}</div>
+    )
+
     return (
       <div className='action-values'>
-        <div className="triangle triangle--left" style={{ color: (any || left) >= 0 ? 'green' : 'red' }}>{any || left}</div>
-        <div className="triangle triangle--right" style={{ color: (any || right) >= 0 ? 'green' : 'red' }}>{any || right}</div>
-        <div className="triangle triangle--up" style={{ color: (any || up) >= 0 ? 'green' : 'red' }}>{any || up}</div>
-        <div className="triangle triangle--down" style={{ color: (any || down) >= 0 ? 'green' : 'red' }}>{any || down}</div>
+        {arrow('left')}
+        {arrow('right')}
+        {arrow('up')}
+        {arrow('down')}
       </div>
     )
   }

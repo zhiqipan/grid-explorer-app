@@ -53,12 +53,16 @@
     height: 0;
     $triangle-size: 6px;
     $spacing: 3px;
-    border: $triangle-size solid #ffda2f;
+    border: $triangle-size solid #dedede;
     position: absolute;
     transform: translate(-$triangle-size, -$triangle-size);
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &--highlight {
+      border: $triangle-size solid #81e28e;
+    }
 
     &--up {
       border-left-color: transparent;

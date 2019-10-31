@@ -31,6 +31,9 @@ export default class GameWorld extends Component {
     trajectoryRunning: false,
     stepInterval: 10,
     agentType: null,
+    agentName: null,
+    agentEpsilon: 0.6,
+    agentDiscount: 0.9,
   }
 
   componentDidMount() {
@@ -85,9 +88,10 @@ export default class GameWorld extends Component {
     }
     if (agents[name]) {
       if (this.agent) this.agent.removeAllObservers()
-      this.agent = new agents[name](this.grid, { epsilon: 0.6, discount: 0.9 })
+      const { agentEpsilon, agentDiscount } = this.state
+      this.agent = new agents[name](this.grid, { epsilon: agentEpsilon, discount: agentDiscount })
       this.agent.addObserver(this.agentObserver)
-      this.setState({ agentType: this.agent.agentType })
+      this.setState({ agentType: this.agent.agentType, agentName: name })
     }
   }
 
@@ -177,11 +181,26 @@ export default class GameWorld extends Component {
         }}>Reset learning progress
         </button>
         <hr />
+        <code>current agent: {this.state.agentName}</code><br />
         <button onClick={() => this.switchAgent('mc')}>State-based MC</button>
         <button onClick={() => this.switchAgent('td')}>State-based TD</button>
         <button onClick={() => this.switchAgent('q-learning-mc')}>Q-learning MC</button>
         <button onClick={() => this.switchAgent('sarsa-mc')}>Sarsa MC</button>
         <hr />
+        <div>
+          Epsilon greedy:
+          <input type="number" placeholder='epsilon' value={this.state.agentEpsilon} style={{ width: 50, margin: 5 }}
+                 onChange={e => this.setState({ agentEpsilon: Math.max(Math.min(e.target.value, 1), 0) })} />
+          <br />
+          Discount factor:
+          <input type="number" placeholder='discount' value={this.state.agentDiscount} style={{ width: 50, margin: 5 }}
+                 onChange={e => this.setState({ agentDiscount: Math.max(Math.min(e.target.value, 1), 0) })} />
+          <button onClick={() => {
+            this.agent.setEpsilon(this.state.agentEpsilon)
+            this.agent.setDiscount(this.state.agentDiscount)
+          }}>Apply to agent
+          </button>
+        </div>
         {this.renderValueGrid()}
       </div>
     )
