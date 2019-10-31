@@ -72,7 +72,7 @@ export default class GameWorld extends Component {
     const gridRewards = [
       [+0, +0, -1, +0, -1],
       [+0, +0, +0, +0, +0],
-      [+0, -1, +0, +0, +0],
+      [+0, -1, +0, -1, +0],
       [+0, +0, +0, +0, -1],
       [+0, -1, +3, +0, -1],
       [+0, +0, +0, +0, -1],
@@ -207,7 +207,11 @@ export default class GameWorld extends Component {
                onChange={e => this.setState({ stepInterval: e.target.value })} />
         <button disabled={this.state.trajectoryRunning} onClick={() => {
           this.agent.goNextStep()
-        }}>Step
+        }}>Step (non-greedy)
+        </button>
+        <button disabled={this.state.trajectoryRunning} onClick={() => {
+          this.agent.goNextStep(null, null, { alwaysGreedy: true, shouldUpdate: false })
+        }}>Step (greedy)
         </button>
         <button disabled={this.state.trajectoryRunning} onClick={() => {
           this.setState({ trajectoryRunning: true })
