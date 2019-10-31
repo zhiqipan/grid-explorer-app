@@ -11,7 +11,6 @@ export default class StateValueGrid extends Component {
     const { width, height, values } = this.props
     const stateValueGrid = []
     let max = 0
-    console.log(values)
     Object.keys(values).forEach(x => {
       max = Math.max(...Object.values(values[x]).map(v => Math.abs(v)))
     })

@@ -41,6 +41,11 @@
     &--agent {
       background-color: orange;
     }
+
+    &--terminal {
+      border-radius: 100%;
+      border-color: orange;
+    }
   }
 }
 

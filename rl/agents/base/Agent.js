@@ -59,6 +59,14 @@ export default class Agent {
     this.notifyValuesUpdate()
   }
 
+  switchGrid(grid) {
+    if (!grid instanceof GridWorld) throw new Error('Grid agent must work on a grid instance')
+
+    this.grid = grid
+    this.runningTrajectory = null
+    this.resetLearningProgress()
+  }
+
   startTrajectory(options = {}) {
     this.start(0, 0)
     while (!this.grid.hasEnded()) {

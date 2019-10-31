@@ -26,6 +26,10 @@ export default class GridWorld {
     this.observers = this.observers.filter(o => o !== ob)
   }
 
+  removeAllObservers() {
+    this.observers.length = 0
+  }
+
   notifyGameInit(x, y) {
     this.observers.forEach(ob => {
       if (typeof ob.notifyGameInit === 'function') {
@@ -63,6 +67,7 @@ export default class GridWorld {
 
   init(x, y) {
     if (!this.isPosAvailable(x, y)) throw new Error('Invalid start position')
+    if (!this.isPosAvailable(this.END_X, this.END_Y)) throw new Error('Invalid terminal position')
 
     this.currX = x
     this.currY = y
