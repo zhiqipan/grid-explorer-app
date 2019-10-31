@@ -1,0 +1,96 @@
+.game-grid {
+  .row {
+    display: flex;
+  }
+
+  .cell {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    min-width: 40px;
+    min-height: 40px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid lightgray;
+    user-select: none;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--larger {
+      min-width: 60px;
+      min-height: 60px;
+      width: 60px;
+      height: 60px;
+    }
+
+    &--block {
+      background-color: black;
+      border: 1px solid black;
+    }
+
+    &--wind {
+      border: 1px solid dodgerblue;
+      &--active {
+        transition: 100ms;
+        background-color: dodgerblue;
+      }
+    }
+
+    &--agent {
+      background-color: orange;
+    }
+  }
+}
+
+.action-values {
+  position: relative;
+  font-size: 10px;
+
+  .triangle {
+    width: 0;
+    height: 0;
+    $triangle-size: 6px;
+    $spacing: 3px;
+    border: $triangle-size solid #ffda2f;
+    position: absolute;
+    transform: translate(-$triangle-size, -$triangle-size);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--up {
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-bottom-width: $triangle-size*2;
+      border-top-width: 0;
+      top: -$triangle-size*2-$spacing;
+    }
+
+    &--down {
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-top-width: $triangle-size*2;
+      border-bottom-width: 0;
+      top: $triangle-size*2+$spacing;
+    }
+
+    &--left {
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      border-right-width: $triangle-size*2;
+      border-left-width: 0;
+      left: -$triangle-size*2-$spacing;
+    }
+
+    &--right {
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      border-left-width: $triangle-size*2;
+      border-right-width: 0;
+      left: $triangle-size*2+$spacing;
+    }
+  }
+}
+
