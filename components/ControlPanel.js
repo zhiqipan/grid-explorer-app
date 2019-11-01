@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button, Input, Form, Label, Divider, Header } from 'semantic-ui-react'
 
 export default class ControlPanel extends Component {
   static defaultProps = {
@@ -32,40 +33,67 @@ export default class ControlPanel extends Component {
 
     return (
       <div>
-        <code>current agent: {agentName}</code><br />
-        <button onClick={() => onSwitchAgent('mc')}>State-based MC</button>
-        <button onClick={() => onSwitchAgent('td')}>State-based TD</button>
-        <button onClick={() => onSwitchAgent('q-learning-mc')}>Q-learning MC</button>
-        <button onClick={() => onSwitchAgent('sarsa-mc')}>Sarsa MC</button>
-        <hr />
+        <Header as='h4'>Select agent</Header>
         <div>
-          Epsilon greedy:
-          <input type="number" placeholder='epsilon' value={this.state.epsilonInput} style={{ width: 50, margin: 5 }}
-                 onChange={e => this.setState({ epsilonInput: Math.max(Math.min(e.target.value, 1), 0) })} />
-          <br />
-          Discount factor:
-          <input type="number" placeholder='discount' value={this.state.discountInput} style={{ width: 50, margin: 5 }}
-                 onChange={e => this.setState({ discountInput: Math.max(Math.min(e.target.value, 1), 0) })} />
-          <button onClick={() => {
-            const { epsilonInput, discountInput } = this.state
-            onModifyAgent(epsilonInput, discountInput)
-          }}>Apply to agent
-          </button>
+          <Button basic size='tiny' style={{ margin: 5 }} onClick={() => onSwitchAgent('mc')} content={'State-based MC'} />
+          <Button basic size='tiny' style={{ margin: 5 }} onClick={() => onSwitchAgent('td')} content={'State-based TD'} />
+          <Button basic size='tiny' style={{ margin: 5 }} onClick={() => onSwitchAgent('q-learning-mc')} content={'Q-learning MC'} />
+          <Button basic size='tiny' style={{ margin: 5 }} onClick={() => onSwitchAgent('sarsa-mc')} content={'Sarsa MC'} />
         </div>
-        <hr />
-        <div>
-          Width:
-          <input type="number" placeholder='width' step={1} value={this.state.widthInput} style={{ width: 50, margin: 5 }}
-                 onChange={e => this.setState({ widthInput: Math.max(Math.min(e.target.value, 15), 3) })} />
-          <br />
-          height:
-          <input type="number" placeholder='height' step={1} value={this.state.heightInput} style={{ width: 50, margin: 5 }}
-                 onChange={e => this.setState({ heightInput: Math.max(Math.min(e.target.value, 15), 3) })} />
-          <button onClick={() => {
-            const { widthInput: w, heightInput: h } = this.state
-            onCreateWorld(w, h)
-          }}>Apply to world
-          </button>
+        <div style={{ marginLeft: 5, color: 'gray' }}>
+          <code>Current agent: {agentName}</code>
+        </div>
+        <Divider />
+
+        <Header as='h4' style={{ marginTop: 0 }}>Agent params</Header>
+        <div style={{ display: 'flex' }}>
+          <Input
+            label='Epsilon' size='mini' type="number" placeholder='epsilon' min={0} max={1} step={0.1}
+            value={this.state.epsilonInput} style={{ width: 120, margin: 5 }}
+            onChange={e => this.setState({ epsilonInput: Math.max(Math.min(e.target.value, 1), 0) })} />
+          <Input
+            label='Discount' size='mini' type="number" placeholder='discount' min={0} max={1} step={0.1}
+            value={this.state.discountInput} style={{ width: 120, margin: 5 }}
+            onChange={e => this.setState({ discountInput: Math.max(Math.min(e.target.value, 1), 0) })} />
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Button
+              basic
+              positive
+              size='tiny'
+              content='Apply'
+              style={{ marginLeft: 5 }}
+              onClick={() => {
+                const { epsilonInput, discountInput } = this.state
+                onModifyAgent(epsilonInput, discountInput)
+              }}
+            />
+          </div>
+        </div>
+        <Divider />
+
+        <Header as='h4' style={{ marginTop: 0 }}>New world</Header>
+        <div style={{ display: 'flex' }}>
+          <Input
+            label='Width' size='mini' type="number" placeholder='width' step={1} value={this.state.widthInput}
+            fluid style={{ width: 120, margin: 5 }}
+            onChange={e => this.setState({ widthInput: Math.max(Math.min(e.target.value, 10), 3) })} />
+          <Input
+            label='Height' size='mini' type="number" placeholder='height' step={1} value={this.state.heightInput}
+            fluid style={{ width: 120, margin: 5 }}
+            onChange={e => this.setState({ heightInput: Math.max(Math.min(e.target.value, 10), 3) })} />
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Button
+              basic
+              positive
+              size='tiny'
+              content='Create'
+              style={{ marginLeft: 5 }}
+              onClick={() => {
+                const { widthInput: w, heightInput: h } = this.state
+                onCreateWorld(w, h)
+              }}
+            />
+          </div>
         </div>
       </div>
     )

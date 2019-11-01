@@ -141,7 +141,7 @@ export default class GameApp extends Component {
         <Grid />
         <Grid divided='vertically'>
           <Grid.Row columns={2}>
-            <Grid.Column width={10}>
+            <Grid.Column width={8}>
               <GameGridWorld
                 rewards={rewards}
                 blocks={blocks}
@@ -153,14 +153,22 @@ export default class GameApp extends Component {
                 onPositionClick={(x, y) => this.modifyGridWorld(x, y)}
               />
             </Grid.Column>
-            <Grid.Column width={6}>
-              <Card.Group>
-                <Card fluid>
+            <Grid.Column width={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              {this.renderValueGrid()}
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={12}>
+              <Card.Group itemsPerRow={2}>
+
+                <Card>
                   <Card.Content>
                     <TrainingPanel grid={grid} agent={agent} />
                   </Card.Content>
                 </Card>
-                <Card fluid>
+
+                <Card>
                   <Card.Content>
                     <ControlPanel
                       agentName={agent && agent.agentName}
@@ -177,27 +185,29 @@ export default class GameApp extends Component {
                     />
                   </Card.Content>
                 </Card>
-                <Card fluid>
-                  <Card.Content>
-                    <ConfigToolbar onSelect={selectedTool => this.setState({ selectedTool })} />
-                  </Card.Content>
-                </Card>
-                <Card fluid>
-                  <Card.Content>
-                    <PresetWorldSelector onSelect={name => {
-                      if (worldConstructors[name]) {
-                        const grid = worldConstructors[name]((w, h) => this.createWorld(w, h))
-                        this.switchAgent('mc', grid)
-                      }
-                    }} />
-                  </Card.Content>
-                </Card>
+
               </Card.Group>
             </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              {this.renderValueGrid()}
+
+            <Grid.Column width={4}>
+
+              <Card>
+                <Card.Content>
+                  <ConfigToolbar onSelect={selectedTool => this.setState({ selectedTool })} />
+                </Card.Content>
+              </Card>
+
+              <Card>
+                <Card.Content>
+                  <PresetWorldSelector onSelect={name => {
+                    if (worldConstructors[name]) {
+                      const grid = worldConstructors[name]((w, h) => this.createWorld(w, h))
+                      this.switchAgent('mc', grid)
+                    }
+                  }} />
+                </Card.Content>
+              </Card>
+
             </Grid.Column>
           </Grid.Row>
         </Grid>

@@ -7,10 +7,10 @@
     box-sizing: border-box;
     padding: 0;
     margin: 2px;
-    min-width: 40px;
-    min-height: 40px;
-    width: 40px;
-    height: 40px;
+    min-width: 48px;
+    min-height: 48px;
+    width: 48px;
+    height: 48px;
     border: 1px solid lightgray;
     user-select: none;
     background-color: white;
@@ -19,10 +19,10 @@
     align-items: center;
 
     &--larger {
-      min-width: 60px;
-      min-height: 60px;
-      width: 60px;
-      height: 60px;
+      min-width: 48px;
+      min-height: 48px;
+      width: 48px;
+      height: 48px;
     }
 
     &--block {
@@ -69,8 +69,8 @@
   .triangle {
     width: 0;
     height: 0;
-    $triangle-size: 6px;
-    $spacing: 3px;
+    $triangle-size: 5px;
+    $spacing: 0px;
     border: $triangle-size solid #dedede;
     position: absolute;
     transform: translate(-$triangle-size, -$triangle-size);
@@ -79,7 +79,7 @@
     align-items: center;
 
     &--highlight {
-      border: $triangle-size solid #81e28e;
+      border: $triangle-size solid #8cf59a;
     }
 
     &--grey {

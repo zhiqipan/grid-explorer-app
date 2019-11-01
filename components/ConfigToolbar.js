@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button } from 'semantic-ui-react'
 
 export default class ConfigToolbar extends Component {
   static defaultProps = {
@@ -12,23 +13,30 @@ export default class ConfigToolbar extends Component {
   render() {
     const { selectedTool } = this.state
     const tool = name => (
-      <button disabled={selectedTool === name} style={{ color: selectedTool === name ? 'green' : '' }} onClick={() => {
-        this.props.onSelect(name)
-        this.setState({ selectedTool: name })
-      }}>{name}</button>
+      <Button
+        size='tiny'
+        style={{ width: 100, margin: 5 }}
+        basic={selectedTool !== name}
+        primary={selectedTool === name}
+        onClick={() => {
+          if (selectedTool === name) {
+            this.props.onSelect(null)
+            this.setState({ selectedTool: null })
+          } else {
+            this.props.onSelect(name)
+            this.setState({ selectedTool: name })
+          }
+        }}
+        content={name}
+      />
     )
     return (
-      <div>
+      <div style={{ textAlign: 'center' }}>
         {tool('reward')}
         {tool('block')}
         {tool('wind')}
         {tool('empty')}
         {tool('terminal')}
-        <button onClick={() => {
-          this.props.onSelect(null)
-          this.setState({ selectedTool: null })
-        }}>Cancel selection
-        </button>
       </div>
     )
   }
