@@ -28,7 +28,7 @@ export default class StateValueGrid extends Component {
         }
         cells.push(<div key={`${x}-${y}`}
                         className={`cell`}
-                        style={{ color }}>{typeof stateValue === 'number' ? stateValue : '?'}</div>)
+                        style={{ color }}>{typeof stateValue === 'number' ? stateValue : ''}</div>)
       }
       stateValueGrid.push(<div key={y} className='row'>{cells}</div>)
     }

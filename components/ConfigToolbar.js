@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'semantic-ui-react'
+import { Button, Header } from 'semantic-ui-react'
 
 export default class ConfigToolbar extends Component {
   static defaultProps = {
@@ -31,7 +31,8 @@ export default class ConfigToolbar extends Component {
       />
     )
     return (
-      <div style={{ textAlign: 'center' }}>
+      <div>
+        <Header as='h4'>Construction</Header>
         {tool('reward')}
         {tool('block')}
         {tool('wind')}

@@ -33,9 +33,30 @@ export default class TrainingPanel extends Component {
     return (
       <div>
         <Header as='h4' style={{ marginTop: 0 }}>Train the agent</Header>
-        <Button basic size='tiny' style={{ width: 100 }} onClick={() => this.startTraining(10)} content={'10 times'} />
-        <Button basic size='tiny' style={{ width: 100 }} onClick={() => this.startTraining(100)} content={'100 times'} />
-        <Button basic size='tiny' style={{ width: 100 }} onClick={() => this.startTraining(1000)} content={'1000 times'} />
+        <Button
+          basic
+          size='tiny'
+          disabled={this.state.trajectoryRunning}
+          style={{ width: 100 }}
+          onClick={() => this.startTraining(10)}
+          content={'10 times'}
+        />
+        <Button
+          basic
+          size='tiny'
+          disabled={this.state.trajectoryRunning}
+          style={{ width: 100 }}
+          onClick={() => this.startTraining(100)}
+          content={'100 times'}
+        />
+        <Button
+          basic
+          size='tiny'
+          disabled={this.state.trajectoryRunning}
+          style={{ width: 100 }}
+          onClick={() => this.startTraining(1000)}
+          content={'1000 times'}
+        />
         <Divider />
         <Header as='h4' style={{ marginTop: 0 }}>Step by step</Header>
         <Button

@@ -17,15 +17,21 @@ export default class GameGridWorld extends Component {
       return name
     }
 
-    function getContent({ reward, hasWind, isWindActive, windStrength, windChance, windDirection }) {
-      if (isWindActive) return windDirection
+    function getContent({ isBlock, reward, hasWind, isWindActive, windStrength, windChance, windDirection }) {
+      if (isBlock) return ''
 
-      if (!hasWind) return reward
+      const rewardElem = <code style={{ color: reward >= 0 ? 'green' : 'red' }}>{reward}</code>
+
+      if (isWindActive) return <code>{windDirection}</code>
+
+      if (!hasWind) return rewardElem
 
       return (
         <div style={{ position: 'relative' }}>
-          {reward}
-          <div style={{ position: 'absolute', top: 14, left: 2, fontSize: 9, color: 'dodgerblue' }}>{windStrength}/{windChance}</div>
+          {rewardElem}
+          <div style={{ position: 'absolute', top: 18, left: -22, width: 48, textAlign: 'right', fontSize: 9, color: 'dodgerblue' }}>
+            <code>{windStrength}/{windChance}</code>
+          </div>
         </div>
       )
     }
@@ -44,7 +50,7 @@ export default class GameGridWorld extends Component {
         const isTerminal = grid.isTerminal(x, y)
 
         const className = getClassName({ isBlock, hasWind, isWindActive, hasAgent, isTerminal, windDirection })
-        const content = getContent({ reward, hasWind, isWindActive, windStrength, windChance, windDirection })
+        const content = getContent({ isBlock, reward, hasWind, isWindActive, windStrength, windChance, windDirection })
         cells.push(<div key={`${x}-${y}`} className={className} onClick={() => onPositionClick(x, y)}>{content}</div>)
       }
       rows.push(<div key={y} className='row'>{cells}</div>)

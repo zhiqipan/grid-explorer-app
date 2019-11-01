@@ -11,7 +11,7 @@
     min-height: 48px;
     width: 48px;
     height: 48px;
-    border: 1px solid lightgray;
+    border: 1px solid #e7e7e7;
     user-select: none;
     background-color: white;
     display: flex;
@@ -26,6 +26,7 @@
     }
 
     &--block {
+      color: black;
       background-color: black;
       border: 1px solid black;
     }
