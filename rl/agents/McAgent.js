@@ -1,5 +1,7 @@
 import StateBasedAgent from './base/StateBasedAgent'
 
+//todo: fix naming issue: value -> reward
+
 // Monte Carlo: on-policy model-based MC for state value function
 export default class McAgent extends StateBasedAgent {
   agentName = 'mc'
