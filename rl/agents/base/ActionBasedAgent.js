@@ -2,6 +2,7 @@ import Agent from './Agent'
 
 const ANY = 'any'
 
+// abstract class for any action based learning agent
 export default class ActionBasedAgent extends Agent {
   agentType = 'action-based'
 

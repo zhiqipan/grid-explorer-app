@@ -1,5 +1,6 @@
 import StateBasedAgent from './base/StateBasedAgent'
 
+// Temporal difference: on-policy model-based TD for state value function
 export default class TdAgent extends StateBasedAgent {
   agentName = 'td'
 

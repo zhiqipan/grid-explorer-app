@@ -1,5 +1,6 @@
 import ActionBasedAgent from './base/ActionBasedAgent'
 
+// Sarsa Monte Carlo: on-policy model-free MC for action value function
 export default class SarsaMcAgent extends ActionBasedAgent {
   agentName = 'sarsa-mc'
 

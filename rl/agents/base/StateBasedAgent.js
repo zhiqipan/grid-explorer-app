@@ -1,6 +1,6 @@
 import Agent from './Agent'
 
-// on-policy model-free Monte-Carlo learning for state value function
+// abstract class for any state based learning agent
 export default class StateBasedAgent extends Agent {
   agentType = 'state-based'
 

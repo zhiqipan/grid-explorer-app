@@ -1,6 +1,6 @@
 import GridWorld from '../../GridWorld'
 
-// on-policy model-free Monte-Carlo learning for state value function
+// abstract class for any agent
 export default class Agent {
   constructor(grid, { epsilon = 0.6, discount = 1 }) {
     if (!grid instanceof GridWorld) throw new Error('Grid agent must work on a grid instance')

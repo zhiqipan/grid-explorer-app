@@ -1,6 +1,6 @@
 import StateBasedAgent from './base/StateBasedAgent'
 
-// on-policy model-free Monte-Carlo learning for state value function
+// Monte Carlo: on-policy model-based MC for state value function
 export default class McAgent extends StateBasedAgent {
   agentName = 'mc'
 

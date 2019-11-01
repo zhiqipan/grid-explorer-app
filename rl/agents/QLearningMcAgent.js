@@ -1,5 +1,6 @@
 import SarsaMcAgent from './SarsaMcAgent'
 
+// Q Learning Monte Carlo: off-policy model-free MC for action value function
 export default class QLearningMcAgent extends SarsaMcAgent {
   agentName = 'q-learning-mc'
 
