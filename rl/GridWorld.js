@@ -187,7 +187,7 @@ export default class GridWorld {
   }
 
   move(action) {
-    if (this.hasEnded(this.currX, this.currY)) throw new Error('The game has ended, already at terminal position')
+    if (this.hasEnded()) throw new Error('The game has ended, already at terminal position')
     if (!Object.keys(this.getAvailableActions()).includes(action)) throw new Error('This action is not available: ' + action)
 
     switch (action) {

@@ -24,8 +24,8 @@ export default class McAgent extends StateBasedAgent {
     if (!this.grid.hasEnded()) {
       const greedy = Math.random() > this.epsilon || alwaysGreedy
       const action = greedy ? this.pickGreedyAction() : this.pickRandomAction()
-      const { x, y } = this.grid.getCurrPos()
       const reward = this.grid.move(action)
+      const { x, y } = this.grid.getCurrPos()
       this.runningTrajectory.push({ x, y, reward })
       if (typeof onStepComplete === 'function') onStepComplete()
       if (training) {
