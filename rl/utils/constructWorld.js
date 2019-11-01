@@ -83,7 +83,7 @@ export function cliff(createWorld) {
   return grid
 }
 
-export function windyCliff(createWorld) {
+export function badWindyCliff(createWorld) {
   const n = 100
   const gridRewards = [
     [+0, -n, -n, -n, -n, -n, +n],
@@ -97,37 +97,15 @@ export function windyCliff(createWorld) {
 
   const grid = createWorld(7, 7)
   grid.setRewards(gridRewards)
-  grid.addWind(3, 2, { direction: 'left', strength: 3, chance: 0.8 })
-  grid.addWind(3, 3, { direction: 'left', strength: 3, chance: 0.8 })
-  grid.addWind(3, 4, { direction: 'left', strength: 3, chance: 0.8 })
+  grid.addWind(5, 2, { direction: 'left', strength: 3, chance: 0.8 })
+  grid.addWind(5, 3, { direction: 'left', strength: 3, chance: 0.8 })
+  grid.addWind(5, 4, { direction: 'left', strength: 3, chance: 0.8 })
 
   grid.setTerminal(6, 0)
 
   return grid
 }
 
-export function windyCliffMild(createWorld) {
-  const n = 100
-  const gridRewards = [
-    [+0, -n, -n, -n, -n, -n, +n],
-    [+0, +0, +0, +0, +0, +0, +0],
-    [+0, +0, +0, +0, +0, +0, +0],
-    [+0, +0, +0, +0, +0, +0, +0],
-    [+0, +0, +0, +0, +0, +0, +0],
-    [+0, +0, +0, +0, +0, +0, +0],
-    [+0, +0, +0, +0, +0, +0, +0],
-  ]
-
-  const grid = createWorld(7, 7)
-  grid.setRewards(gridRewards)
-  grid.addWind(3, 2, { direction: 'left', strength: 3, chance: 0.4 })
-  grid.addWind(3, 3, { direction: 'left', strength: 3, chance: 0.4 })
-  grid.addWind(3, 4, { direction: 'left', strength: 3, chance: 0.4 })
-
-  grid.setTerminal(6, 0)
-
-  return grid
-}
 
 export function goodWindyCliff(createWorld) {
   const n = 100
@@ -143,11 +121,49 @@ export function goodWindyCliff(createWorld) {
 
   const grid = createWorld(7, 7)
   grid.setRewards(gridRewards)
-  grid.addWind(0, 2, { direction: 'down', strength: 3, chance: 0.7 })
-  grid.addWind(2, 6, { direction: 'right', strength: 3, chance: 0.7 })
+  grid.addWind(0, 2, { direction: 'down', strength: 4, chance: 0.8 })
+  grid.addWind(2, 6, { direction: 'right', strength: 3, chance: 0.8 })
   grid.addWind(6, 6, { direction: 'up', strength: 5, chance: 0.3 })
 
   grid.setTerminal(6, 0)
+
+  return grid
+}
+
+export function luckyWindyCliff(createWorld) { // state-based agents fail in this case (action-based agents know to take the risk)
+  const n = 100
+  const m = 11
+  const gridRewards = [
+    [+0, -n, -n, -n, -n, -n, +n],
+    [+0, +m, +m, +m, +m, +m, +0],
+    [+0, +0, +0, +0, +0, +0, +0],
+  ]
+
+  const grid = createWorld(7, 3)
+  grid.setRewards(gridRewards)
+  grid.addWind(1, 1, { direction: 'up', strength: 1, chance: 0.1 })
+  grid.addWind(2, 1, { direction: 'up', strength: 1, chance: 0.1 })
+  grid.addWind(3, 1, { direction: 'up', strength: 1, chance: 0.1 })
+  grid.addWind(4, 1, { direction: 'up', strength: 1, chance: 0.1 })
+  grid.addWind(5, 1, { direction: 'up', strength: 1, chance: 0.1 })
+
+  grid.setTerminal(6, 0)
+
+  return grid
+}
+
+export function jumpingPoint(createWorld) { // state-based agents fail in this case (action-based agents know to avoid the risk)
+  const n = 5
+  const gridRewards = [
+    [+0, +0, +1, +0, +0, -n],
+    [+0, +0, +0, +0, +0, +0],
+  ]
+
+  const grid = createWorld(6, 2)
+  grid.setRewards(gridRewards)
+  grid.addWind(1, 0, { direction: 'right', strength: 4, chance: 0.9 })
+
+  grid.setTerminal(2, 0)
 
   return grid
 }
