@@ -31,10 +31,23 @@
     }
 
     &--wind {
-      border: 1px solid dodgerblue;
+      $wind-color: dodgerblue;
+      $wind-border-style: 2px solid $wind-color;
+      &--left {
+        border-left: $wind-border-style
+      }
+      &--right {
+        border-right: $wind-border-style
+      }
+      &--up {
+        border-top: $wind-border-style
+      }
+      &--down {
+        border-bottom: $wind-border-style
+      }
       &--active {
         transition: 100ms;
-        background-color: dodgerblue;
+        background-color: $wind-color;
       }
     }
 
