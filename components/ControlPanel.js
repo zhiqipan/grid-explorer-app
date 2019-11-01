@@ -1,19 +1,38 @@
 import React, { Component } from 'react'
 
 export default class ControlPanel extends Component {
+  static defaultProps = {
+    agentName: null,
+    defaultWidth: null,
+    defaultHeight: null,
+    defaultEpsilon: null,
+    defaultDiscount: null,
+  }
+
   state = {
-    agentEpsilon: 0.6,
-    agentDiscount: 0.9,
-    widthInput: 5,
-    heightInput: 6,
+    epsilonInput: this.props.defaultEpsilon,
+    discountInput: this.props.defaultDiscount,
+    widthInput: this.props.defaultWidth,
+    heightInput: this.props.defaultHeight,
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props !== prevProps) {
+      this.setState({
+        epsilonInput: this.props.defaultEpsilon,
+        discountInput: this.props.defaultDiscount,
+        widthInput: this.props.defaultWidth,
+        heightInput: this.props.defaultHeight,
+      })
+    }
   }
 
   render() {
-    const { onCreateWorld, onSwitchAgent, agent } = this.props
+    const { onCreateWorld, onSwitchAgent, onModifyAgent, agentName } = this.props
 
     return (
       <div>
-        <code>current agent: {agent.agentName}</code><br />
+        <code>current agent: {agentName}</code><br />
         <button onClick={() => onSwitchAgent('mc')}>State-based MC</button>
         <button onClick={() => onSwitchAgent('td')}>State-based TD</button>
         <button onClick={() => onSwitchAgent('q-learning-mc')}>Q-learning MC</button>
@@ -21,16 +40,15 @@ export default class ControlPanel extends Component {
         <hr />
         <div>
           Epsilon greedy:
-          <input type="number" placeholder='epsilon' value={this.state.agentEpsilon} style={{ width: 50, margin: 5 }}
-                 onChange={e => this.setState({ agentEpsilon: Math.max(Math.min(e.target.value, 1), 0) })} />
+          <input type="number" placeholder='epsilon' value={this.state.epsilonInput} style={{ width: 50, margin: 5 }}
+                 onChange={e => this.setState({ epsilonInput: Math.max(Math.min(e.target.value, 1), 0) })} />
           <br />
           Discount factor:
-          <input type="number" placeholder='discount' value={this.state.agentDiscount} style={{ width: 50, margin: 5 }}
-                 onChange={e => this.setState({ agentDiscount: Math.max(Math.min(e.target.value, 1), 0) })} />
+          <input type="number" placeholder='discount' value={this.state.discountInput} style={{ width: 50, margin: 5 }}
+                 onChange={e => this.setState({ discountInput: Math.max(Math.min(e.target.value, 1), 0) })} />
           <button onClick={() => {
-            const { agentEpsilon, agentDiscount } = this.state
-            agent.setEpsilon(agentEpsilon)
-            agent.setDiscount(agentDiscount)
+            const { epsilonInput, discountInput } = this.state
+            onModifyAgent(epsilonInput, discountInput)
           }}>Apply to agent
           </button>
         </div>

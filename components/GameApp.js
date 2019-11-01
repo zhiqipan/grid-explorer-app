@@ -12,22 +12,8 @@ import TrainingPanel from './TrainingPanel'
 import GameGridWorld from './GameGridWorld'
 import ControlPanel from './ControlPanel'
 import ConfigToolbar from './ConfigToolbar'
-
-function contructWorld(grid) {
-  const gridRewards = [
-    [+0, +0, -1, +0, -1],
-    [+0, +0, +0, +0, +0],
-    [+0, -1, +0, -1, +0],
-    [+0, +0, +0, +0, -1],
-    [+0, -1, +3, +0, -1],
-    [+0, +0, +0, +0, -1],
-  ]
-
-  grid.setRewards(gridRewards)
-  grid.setTerminal(2, 4)
-  grid.addBlock(0, 1)
-  grid.addWind(1, 1, { strength: 2, direction: 'right', chance: .3 })
-}
+import * as worldConstructors from '../rl/utils/constructWorld'
+import PresetWorldSelector from './PresetWorldSelector'
 
 export default class GameApp extends Component {
   state = {
@@ -43,6 +29,8 @@ export default class GameApp extends Component {
     activeWind: null,
     learntValues: {},
     selectedTool: null,
+    agentEpsilon: 0.6,
+    agentDiscount: 0.9,
     grid: null,
     agent: null,
   }
@@ -68,14 +56,12 @@ export default class GameApp extends Component {
     }
     this.agentObserver = {
       notifyValuesUpdate: (learntValues) => {
-        console.log(learntValues)
         this.setState({ learntValues })
       },
     }
 
-    const grid = this.createWorld(5, 6)
+    const grid = worldConstructors['basic']((w, h) => this.createWorld(w, h))
     this.switchAgent('mc', grid)
-    contructWorld(grid)
   }
 
   createWorld(width, height) {
@@ -100,7 +86,6 @@ export default class GameApp extends Component {
       const agent = new agents[name](grid, { epsilon: agentEpsilon, discount: agentDiscount })
       agent.addObserver(this.agentObserver)
       this.setState({ agent })
-      console.log('Agent ready:', name)
       return agent
     }
   }
@@ -178,15 +163,33 @@ export default class GameApp extends Component {
                 <Card fluid>
                   <Card.Content>
                     <ControlPanel
-                      agent={agent}
+                      agentName={agent && agent.agentName}
+                      defaultWidth={grid && grid.getSize().width}
+                      defaultHeight={grid && grid.getSize().height}
+                      defaultEpsilon={agent && agent.epsilon}
+                      defaultDiscount={agent && agent.discount}
                       onCreateWorld={(w, h) => this.createWorld(w, h)}
                       onSwitchAgent={name => this.switchAgent(name)}
+                      onModifyAgent={(ep, discount) => {
+                        agent.setEpsilon(ep)
+                        agent.setDiscount(discount)
+                      }}
                     />
                   </Card.Content>
                 </Card>
                 <Card fluid>
                   <Card.Content>
                     <ConfigToolbar onSelect={selectedTool => this.setState({ selectedTool })} />
+                  </Card.Content>
+                </Card>
+                <Card fluid>
+                  <Card.Content>
+                    <PresetWorldSelector onSelect={name => {
+                      if (worldConstructors[name]) {
+                        const grid = worldConstructors[name]((w, h) => this.createWorld(w, h))
+                        this.switchAgent('mc', grid)
+                      }
+                    }} />
                   </Card.Content>
                 </Card>
               </Card.Group>

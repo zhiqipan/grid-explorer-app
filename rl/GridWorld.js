@@ -9,6 +9,8 @@ export default class GridWorld {
     this.MAX_X = width - 1
     this.MIN_Y = 0
     this.MAX_Y = height - 1
+    this.currX = null
+    this.currY = null
     this.rewards = {}
     this.blocks = {}
     this.winds = {}
@@ -20,6 +22,7 @@ export default class GridWorld {
     if (ob) {
       this.observers.push(ob)
       this.notifyGridConfigChange()
+      this.notifyAgentMove()
     }
   }
 

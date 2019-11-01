@@ -11,7 +11,7 @@ export default class TrainingPanel extends Component {
 
   state = {
     trajectoryRunning: false,
-    stepInterval: 10,
+    stepInterval: 50,
   }
 
   startTraining(times = 1) {
