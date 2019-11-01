@@ -106,7 +106,6 @@ export function badWindyCliff(createWorld) {
   return grid
 }
 
-
 export function goodWindyCliff(createWorld) {
   const n = 100
   const gridRewards = [
@@ -165,5 +164,20 @@ export function jumpingPoint(createWorld) { // state-based agents fail in this c
 
   grid.setTerminal(2, 0)
 
+  return grid
+}
+
+export function changingMaze(createWorld) {
+  const grid = createWorld(8, 5)
+  grid.addBlock(0, 3)
+  grid.addBlock(1, 3)
+  grid.addBlock(2, 3)
+  grid.addBlock(3, 3)
+  grid.addBlock(4, 3)
+  grid.addBlock(5, 3)
+  grid.addBlock(6, 3)
+
+  grid.setReward(1, 4, 10)
+  grid.setTerminal(1, 4)
   return grid
 }

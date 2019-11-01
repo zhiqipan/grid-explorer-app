@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button, Divider, Header, Form, Input, Label } from 'semantic-ui-react'
-import AgentTrainer from '../rl/AgentTrainer'
 
 export default class TrainingPanel extends Component {
   intervals = []
@@ -19,7 +18,7 @@ export default class TrainingPanel extends Component {
     const { grid, agent } = this.props
     grid.pauseObservers()
     agent.pauseObservers()
-    AgentTrainer.train(agent, times)
+    agent.train(times)
     grid.resumeObservers()
     agent.resumeObservers()
   }

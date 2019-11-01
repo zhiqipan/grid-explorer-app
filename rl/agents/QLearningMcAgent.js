@@ -11,11 +11,12 @@ export default class QLearningMcAgent extends SarsaMcAgent {
     return Object.keys(actions)[greedyIndex]
   }
 
-  performBackup(trajectory) {
+  performMcBackup(trajectory) {
     for (let i = trajectory.length - 1; i >= 0; i--) {
       const currStep = trajectory[i]
       const nextStep = trajectory[i + 1]
-      let newValue = currStep.value
+      let newValue = currStep.reward
+      newValue += Math.sqrt(this.getLongTimeNoTryCount(currStep.x, currStep.y, currStep.action)) * this.longTimeNoTryRewardBonusFactor
       if (nextStep) {
         newValue += this.getValue(nextStep.x, nextStep.y, this.pickGreedyActionAtPos(nextStep.x, nextStep.y)) * this.discount
       }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Input, Form, Label, Divider, Header } from 'semantic-ui-react'
+import { Button, Input, Divider, Header } from 'semantic-ui-react'
 
 export default class ControlPanel extends Component {
   static defaultProps = {
@@ -8,11 +8,13 @@ export default class ControlPanel extends Component {
     defaultHeight: null,
     defaultEpsilon: null,
     defaultDiscount: null,
+    defaultLongTimeNoTryRewardBonusFactor: null,
   }
 
   state = {
     epsilonInput: this.props.defaultEpsilon,
     discountInput: this.props.defaultDiscount,
+    longTimeNoTryRewardBonusFactorInput: this.props.defaultLongTimeNoTryRewardBonusFactor,
     widthInput: this.props.defaultWidth,
     heightInput: this.props.defaultHeight,
   }
@@ -46,15 +48,21 @@ export default class ControlPanel extends Component {
         <Divider />
 
         <Header as='h4' style={{ marginTop: 0 }}>Agent params</Header>
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div>
+            <Input
+              label='Epsilon' size='mini' type="number" placeholder='epsilon' min={0} max={1} step={0.1}
+              value={this.state.epsilonInput} style={{ width: 120, margin: 5 }}
+              onChange={e => this.setState({ epsilonInput: Math.max(Math.min(e.target.value, 1), 0) })} />
+            <Input
+              label='Discount' size='mini' type="number" placeholder='discount' min={0} max={1} step={0.1}
+              value={this.state.discountInput} style={{ width: 120, margin: 5 }}
+              onChange={e => this.setState({ discountInput: Math.max(Math.min(e.target.value, 1), 0) })} />
+          </div>
           <Input
-            label='Epsilon' size='mini' type="number" placeholder='epsilon' min={0} max={1} step={0.1}
-            value={this.state.epsilonInput} style={{ width: 120, margin: 5 }}
-            onChange={e => this.setState({ epsilonInput: Math.max(Math.min(e.target.value, 1), 0) })} />
-          <Input
-            label='Discount' size='mini' type="number" placeholder='discount' min={0} max={1} step={0.1}
-            value={this.state.discountInput} style={{ width: 120, margin: 5 }}
-            onChange={e => this.setState({ discountInput: Math.max(Math.min(e.target.value, 1), 0) })} />
+            label='Exploration bonus (*exp)' size='mini' type="number" placeholder='discount' min={0} max={0.08} step={0.0005}
+            value={this.state.longTimeNoTryRewardBonusFactorInput} style={{ width: 150, margin: 5 }}
+            onChange={e => this.setState({ longTimeNoTryRewardBonusFactorInput: e.target.value })} />
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Button
               basic
@@ -63,8 +71,8 @@ export default class ControlPanel extends Component {
               content='Apply'
               style={{ marginLeft: 5 }}
               onClick={() => {
-                const { epsilonInput, discountInput } = this.state
-                onModifyAgent(epsilonInput, discountInput)
+                const { epsilonInput, discountInput, longTimeNoTryRewardBonusFactorInput } = this.state
+                onModifyAgent(epsilonInput, discountInput, longTimeNoTryRewardBonusFactorInput)
               }}
             />
           </div>

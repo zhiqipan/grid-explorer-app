@@ -44,4 +44,18 @@ export default class ActionBasedAgent extends Agent {
     const greedyIndex = values.indexOf(Math.max(...values))
     return Object.keys(actions)[greedyIndex]
   }
+
+
+  getLongTimeNoTryCount(x, y, action) {
+    if (!this.lastTries[x]) return this.trainingStepTotal
+    if (!this.lastTries[x][y]) return this.trainingStepTotal
+    if (!this.lastTries[x][y][action]) return this.trainingStepTotal
+    return this.trainingStepTotal - this.lastTries[x][y][action]
+  }
+
+  setLastTry(x, y, action) {
+    if (!this.lastTries[x]) this.lastTries[x] = {}
+    if (!this.lastTries[x][y]) this.lastTries[x][y] = {}
+    this.lastTries[x][y][action] = this.trainingStepTotal
+  }
 }

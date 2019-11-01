@@ -176,11 +176,13 @@ export default class GameApp extends Component {
                       defaultHeight={grid && grid.getSize().height}
                       defaultEpsilon={agent && agent.epsilon}
                       defaultDiscount={agent && agent.discount}
+                      defaultLongTimeNoTryRewardBonusFactor={agent && agent.longTimeNoTryRewardBonusFactor}
                       onCreateWorld={(w, h) => this.createWorld(w, h)}
                       onSwitchAgent={name => this.switchAgent(name)}
-                      onModifyAgent={(ep, discount) => {
+                      onModifyAgent={(ep, discount, bonusFactor) => {
                         agent.setEpsilon(ep)
                         agent.setDiscount(discount)
+                        agent.setLongTimeNoTryRewardBonusFactor(bonusFactor)
                       }}
                     />
                   </Card.Content>

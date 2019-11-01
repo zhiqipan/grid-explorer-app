@@ -32,4 +32,15 @@ export default class StateBasedAgent extends Agent {
     const greedyIndex = values.indexOf(Math.max(...values))
     return Object.keys(actions)[greedyIndex]
   }
+
+  getLongTimeNoTryCount(x, y) {
+    if (!this.lastTries[x]) return this.trainingStepTotal
+    if (!this.lastTries[x][y]) return this.trainingStepTotal
+    return this.trainingStepTotal - this.lastTries[x][y]
+  }
+
+  setLastTry(x, y) {
+    if (!this.lastTries[x]) this.lastTries[x] = {}
+    this.lastTries[x][y] = this.trainingStepTotal
+  }
 }
