@@ -128,3 +128,26 @@ export function windyCliffMild(createWorld) {
 
   return grid
 }
+
+export function goodWindyCliff(createWorld) {
+  const n = 100
+  const gridRewards = [
+    [+0, -n, -n, -n, -n, -n, +n],
+    [+0, +0, +0, +0, +0, +0, +0],
+    [+0, +0, +0, +0, +0, +0, +0],
+    [+0, +0, +0, +0, +0, +0, +0],
+    [+0, +0, +0, +0, +0, +0, +0],
+    [+0, +0, +0, +0, +0, +0, +0],
+    [+0, +0, +0, +0, +0, +0, +0],
+  ]
+
+  const grid = createWorld(7, 7)
+  grid.setRewards(gridRewards)
+  grid.addWind(0, 2, { direction: 'down', strength: 3, chance: 0.7 })
+  grid.addWind(2, 6, { direction: 'right', strength: 3, chance: 0.7 })
+  grid.addWind(6, 6, { direction: 'up', strength: 5, chance: 0.3 })
+
+  grid.setTerminal(6, 0)
+
+  return grid
+}
