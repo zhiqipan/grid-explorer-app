@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Icon, Menu } from 'semantic-ui-react'
 
 export default class Header extends Component {
   render() {
@@ -8,7 +8,7 @@ export default class Header extends Component {
         <Menu.Item>Grid Explorer</Menu.Item>
 
         <Menu.Menu position='right'>
-          <a className='item' href='https://www.github.com/zhiqipan' target='_blank'>GitHub</a>
+          <a className='item' href='https://github.com/zhiqipan/grid-explorer-app' target='_blank'><Icon name='github' />Source code</a>
         </Menu.Menu>
       </Menu>
     )

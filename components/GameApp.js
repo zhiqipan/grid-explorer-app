@@ -7,7 +7,7 @@ import SarsaMcAgent from '../rl/agents/SarsaMcAgent'
 import QLearningMcAgent from '../rl/agents/QLearningMcAgent'
 import StateValueGrid from '../components/StateValueGrid'
 import ActionValueGrid from '../components/ActionValueGrid'
-import { Card, Grid } from 'semantic-ui-react'
+import { Card, Divider, Grid, Header } from 'semantic-ui-react'
 import TrainingPanel from './TrainingPanel'
 import GameGridWorld from './GameGridWorld'
 import ControlPanel from './ControlPanel'
@@ -118,7 +118,7 @@ export default class GameApp extends Component {
       const chance = parseFloat(prompt('chance (eg: 0.3)'))
       grid.addWind(x, y, { direction, strength, chance })
       return
-    case 'empty':
+    case 'clear':
       grid.removeBlock(x, y)
       grid.removeWind(x, y)
       grid.setReward(x, y, 0)
@@ -142,6 +142,7 @@ export default class GameApp extends Component {
         <Grid divided='vertically'>
           <Grid.Row columns={2}>
             <Grid.Column width={8}>
+              <Header as='h3'>Grid world</Header>
               <GameGridWorld
                 rewards={rewards}
                 blocks={blocks}
@@ -153,13 +154,14 @@ export default class GameApp extends Component {
                 onPositionClick={(x, y) => this.modifyGridWorld(x, y)}
               />
             </Grid.Column>
-            <Grid.Column width={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Grid.Column width={8} style={{ display: 'flex', alignItems: 'flex-end', flexDirection: 'column' }}>
+              <Header as='h3'>Learnt values</Header>
               {this.renderValueGrid()}
             </Grid.Column>
           </Grid.Row>
 
           <Grid.Row>
-            <Grid.Column width={12}>
+            <Grid.Column width={10}>
               <Card.Group itemsPerRow={2}>
 
                 <Card>
@@ -191,25 +193,25 @@ export default class GameApp extends Component {
               </Card.Group>
             </Grid.Column>
 
-            <Grid.Column width={4}>
+            <Grid.Column width={6}>
+              <Card.Group itemsPerRow={1}>
+                <Card>
+                  <Card.Content>
+                    <ConfigToolbar onSelect={selectedTool => this.setState({ selectedTool })} />
+                  </Card.Content>
+                </Card>
 
-              <Card>
-                <Card.Content>
-                  <ConfigToolbar onSelect={selectedTool => this.setState({ selectedTool })} />
-                </Card.Content>
-              </Card>
-
-              <Card>
-                <Card.Content>
-                  <PresetWorldSelector onSelect={name => {
-                    if (worldConstructors[name]) {
-                      const grid = worldConstructors[name]((w, h) => this.createWorld(w, h))
-                      this.switchAgent('mc', grid)
-                    }
-                  }} />
-                </Card.Content>
-              </Card>
-
+                <Card>
+                  <Card.Content>
+                    <PresetWorldSelector onSelect={name => {
+                      if (worldConstructors[name]) {
+                        const grid = worldConstructors[name]((w, h) => this.createWorld(w, h))
+                        this.switchAgent('mc', grid)
+                      }
+                    }} />
+                  </Card.Content>
+                </Card>
+              </Card.Group>
             </Grid.Column>
           </Grid.Row>
         </Grid>

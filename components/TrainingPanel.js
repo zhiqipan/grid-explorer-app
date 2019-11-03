@@ -32,39 +32,34 @@ export default class TrainingPanel extends Component {
     return (
       <div>
         <Header as='h4' style={{ marginTop: 0 }}>Train the agent</Header>
-        <Button
-          basic
-          size='tiny'
-          disabled={this.state.trajectoryRunning}
-          style={{ width: 100 }}
-          onClick={() => this.startTraining(10)}
-          content={'10 times'}
-        />
-        <Button
-          basic
-          size='tiny'
-          disabled={this.state.trajectoryRunning}
-          style={{ width: 100 }}
-          onClick={() => this.startTraining(100)}
-          content={'100 times'}
-        />
-        <Button
-          basic
-          size='tiny'
-          disabled={this.state.trajectoryRunning}
-          style={{ width: 100 }}
-          onClick={() => this.startTraining(1000)}
-          content={'1000 times'}
-        />
+        <div>
+          <Button
+            basic
+            size='tiny'
+            disabled={this.state.trajectoryRunning}
+            style={{ width: 90 }}
+            onClick={() => this.startTraining(10)}
+            content={'10 times'}
+          />
+          <Button
+            basic
+            size='tiny'
+            disabled={this.state.trajectoryRunning}
+            style={{ width: 90 }}
+            onClick={() => this.startTraining(100)}
+            content={'100 times'}
+          />
+          <Button
+            basic
+            size='tiny'
+            disabled={this.state.trajectoryRunning}
+            style={{ width: 100 }}
+            onClick={() => this.startTraining(1000)}
+            content={'1000 times'}
+          />
+        </div>
         <Divider />
         <Header as='h4' style={{ marginTop: 0 }}>Step by step</Header>
-        <Button
-          basic
-          size='tiny'
-          disabled={this.state.trajectoryRunning}
-          onClick={() => agent.goNextStep()}
-          content='Non-greedy step'
-        />
         <Button
           basic
           size='tiny'
@@ -72,10 +67,18 @@ export default class TrainingPanel extends Component {
           onClick={() => agent.goNextStep(null, null, { alwaysGreedy: true, shouldUpdate: false })}
           content='Greedy step'
         />
+        <Button
+          basic
+          size='tiny'
+          disabled={this.state.trajectoryRunning}
+          onClick={() => agent.goNextStep()}
+          content='Non-greedy step'
+        />
         <Divider />
         <Header as='h4' style={{ marginTop: 0 }}>Run an episode</Header>
         <Form.Field style={{ marginBottom: 10 }}>
           <Input
+            label='Step interval'
             placeholder='speed'
             type='number'
             step={100}
@@ -85,7 +88,6 @@ export default class TrainingPanel extends Component {
             value={this.state.stepInterval}
             onChange={e => this.setState({ stepInterval: e.target.value })}
           />
-          <Label pointing='left'>step interval</Label>
         </Form.Field>
         <Button
           basic

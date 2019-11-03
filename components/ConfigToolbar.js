@@ -32,12 +32,18 @@ export default class ConfigToolbar extends Component {
     )
     return (
       <div>
-        <Header as='h4'>Construction</Header>
+        <Header as='h4'>Construct the world</Header>
+        <div style={{ fontSize: 12, marginBottom: 5 }}>
+          <p>- Click a tool to customize a cell in the world</p>
+          <p>- Click again to cancel the tool selection</p>
+          <p>- Each world must have one terminal state</p>
+          <p>- Use 'clear' to reset a cell in the world</p>
+        </div>
         {tool('reward')}
         {tool('block')}
         {tool('wind')}
-        {tool('empty')}
         {tool('terminal')}
+        {tool('clear')}
       </div>
     )
   }
