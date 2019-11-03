@@ -28,7 +28,8 @@ There are several panels. The bottom-right one is for choosing some preset world
 > In the above two worlds, state-based agents fail because they hold a wrong version of model (failing to consider wind),
 while action-based agents (e.g. Sarsa Monte-Carlo and Q-learning Monte-Carlo) don't rely on a pre-known model.
 
-- `changing maze` world needs yourself to chance the world, this is a typical demo for changing environment.
+- `changing maze` world needs yourself to change the world (to remove an block and add another),
+this is a typical demo for changing environment.
 Refer to textbook *Reinforcement Learning: An Introduction Chapter 8.3* to understand more
 
 #### 2. Construct your own world
