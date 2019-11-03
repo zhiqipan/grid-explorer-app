@@ -21,9 +21,9 @@ There are several panels. The bottom-right one is for choosing some preset world
 
 - `cliff` world is used to demo epsilon-greedy algorithm comes up with a policy to detour.
 
-- State-based agents kinda fail in `luck windy cliff`, while action-based agents know to avoid the risk
+- State-based agents kinda fail in `luck windy cliff`, while action-based agents know to **take the risk**
 
-- State-based agents kinda fail in `jumping point`, while action-based agents know to avoid the risk
+- State-based agents kinda fail in `jumping point`, while action-based agents know to **avoid the risk**
 
 > In the above two worlds, state-based agents fail because they hold a wrong version of model (failing to consider wind),
 while action-based agents (e.g. Sarsa Monte-Carlo and Q-learning Monte-Carlo) don't rely on a pre-known model.
