@@ -3,8 +3,10 @@
 Visualizing reinforcement learning when exploring the grid world.
 
 > **Warning**: All algorithms run live on your browser. If you use '1000 times' to train 1000 times in a row in a complex world,
-the browser may crash (taking too long to complete the training). However, based on my experiments, Monte-Carlo Q-learning
-agent usually won't disappoint you and converges quite fast.
+the browser may *(have a tiny chance to)* crash (taking too long to complete the training).
+However, based on my experiments, Monte-Carlo Q-learning agent usually won't disappoint you and converges quite fast.
+Sarsa is the worst one... it usually takes longer time to train because it's on-policy explores too much
+(increase epsilon may help, play it around yourself!)
 
 ### How to build and run this app:
 1. Git clone this project
