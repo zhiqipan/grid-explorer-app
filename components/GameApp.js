@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import '../styles/game-grid.scss'
 import GridWorld from '../rl/GridWorld'
 import McAgent from '../rl/agents/McAgent'
 import TdAgent from '../rl/agents/TdAgent'
@@ -105,29 +104,29 @@ export default class GameApp extends Component {
   modifyGridWorld(x, y) {
     const { selectedTool: tool, grid } = this.state
     switch (tool) {
-    case 'reward':
-      const r = parseInt(prompt('reward amount (int)'))
-      grid.setReward(x, y, r)
-      return
-    case 'block':
-      grid.addBlock(x, y)
-      return
-    case 'wind':
-      const direction = prompt('direction (left, right, up, down)')
-      const strength = parseInt(prompt('strength (eg: 2)'))
-      const chance = parseFloat(prompt('chance (eg: 0.3)'))
-      grid.addWind(x, y, { direction, strength, chance })
-      return
-    case 'clear':
-      grid.removeBlock(x, y)
-      grid.removeWind(x, y)
-      grid.setReward(x, y, 0)
-      return
-    case 'terminal':
-      grid.setTerminal(x, y)
-      return
-    default:
-      return
+      case 'reward':
+        const r = parseInt(prompt('reward amount (int)'))
+        grid.setReward(x, y, r)
+        return
+      case 'block':
+        grid.addBlock(x, y)
+        return
+      case 'wind':
+        const direction = prompt('direction (left, right, up, down)')
+        const strength = parseInt(prompt('strength (eg: 2)'))
+        const chance = parseFloat(prompt('chance (eg: 0.3)'))
+        grid.addWind(x, y, { direction, strength, chance })
+        return
+      case 'clear':
+        grid.removeBlock(x, y)
+        grid.removeWind(x, y)
+        grid.setReward(x, y, 0)
+        return
+      case 'terminal':
+        grid.setTerminal(x, y)
+        return
+      default:
+        return
     }
   }
 
@@ -139,10 +138,10 @@ export default class GameApp extends Component {
     return (
       <div>
         <Grid />
-        <Grid divided='vertically'>
+        <Grid divided="vertically">
           <Grid.Row columns={2}>
             <Grid.Column width={8}>
-              <Header as='h3'>Grid world</Header>
+              <Header as="h3">Grid world</Header>
               <GameGridWorld
                 rewards={rewards}
                 blocks={blocks}
@@ -155,7 +154,7 @@ export default class GameApp extends Component {
               />
             </Grid.Column>
             <Grid.Column width={8} style={{ display: 'flex', alignItems: 'flex-end', flexDirection: 'column' }}>
-              <Header as='h3'>Learnt values</Header>
+              <Header as="h3">Learnt values</Header>
               {this.renderValueGrid()}
             </Grid.Column>
           </Grid.Row>

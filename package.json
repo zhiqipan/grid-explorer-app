@@ -9,11 +9,10 @@
     "heroku-postbuild": "yarn run build"
   },
   "dependencies": {
-    "@zeit/next-sass": "^1.0.1",
-    "next": "9.1.2",
-    "node-sass": "^4.13.0",
-    "react": "16.11.0",
-    "react-dom": "16.11.0",
-    "semantic-ui-react": "^0.88.1"
+    "next": "^13.3.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "sass": "^1.71.1",
+    "semantic-ui-react": "^0.88.2"
   }
 }
